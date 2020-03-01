@@ -14,6 +14,8 @@ const Product=require('./models/product');
 const User = require('./models/user');
 const Cart=require('./models/cart');
 const CartItem=require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 //between creating app and creatig server we can add middlewares
 
 
@@ -63,8 +65,11 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product, {through: CartItem});
 Product.belongsToMany(Cart, {through: CartItem});
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, {through: OrderItem});
 
-sequelize.sync({force: true})//{force: true} force true not to be used in production, used to overwrite alltables
+sequelize.sync()//{force: true} force true not to be used in production, used to overwrite alltables
 .then(result=>{
    // console.log(result);
    return User.findByPk(1);
@@ -79,6 +84,10 @@ sequelize.sync({force: true})//{force: true} force true not to be used in produc
 })
 .then(user=>{
     //console.log(user);
+    return user.createCart();
+    
+})
+.then(cart=> {
     app.listen(3000);
 })
 .catch(err =>{

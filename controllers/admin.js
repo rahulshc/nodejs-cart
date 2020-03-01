@@ -22,7 +22,7 @@ exports.postAddProduct = (req, res, next) => {
     //userId: req.user.id not required in magic association
   })//magic association
   .then(result=>{
-    console.log(result);
+   //console.log(result);
     res.redirect('/admin/products');
   })
   .catch(err=> {
@@ -71,7 +71,7 @@ exports.postEditProduct = (req, res, next) => {
     return product.save();//returns a promise otherwise there will be nesting like callback hell
   })
   .then(result=> {
-    console.log('Updated Product');
+    //console.log('Updated Product');
     res.redirect('/admin/products');
   })
   .catch(err=> {//catch handles errors from both promises product.save and findbypk then
@@ -101,7 +101,7 @@ exports.postDeleteProduct = (req, res, next) => {
     return product.destroy();
   })
   .then(result=> {
-    console.log('DESTROYED PRODUCT');
+    //console.log('DESTROYED PRODUCT');
     res.redirect('/admin/products');
   })
   .catch(err=>{
